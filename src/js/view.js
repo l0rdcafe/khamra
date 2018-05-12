@@ -1,15 +1,5 @@
 import helpers from "./helpers";
 
-const render = function(state) {
-  const container = helpers.qs("#results");
-  container.innerHTML = "";
-  state.venues.forEach(element => {
-    const li = helpers.newEl("li");
-    li.innerHTML = element.venue.name;
-    container.appendChild(li);
-  });
-};
-
 const drawNotif = function(message) {
   const div = helpers.newEl("div");
   const nav = helpers.qs(".nav");
@@ -43,4 +33,28 @@ const removeSpinner = function() {
   spinner.parentNode.removeChild(spinner);
 };
 
-export default { render, drawNotif, removeNotifs, drawSpinner, removeSpinner };
+const drawNextBtn = function() {
+  const nextBtn = helpers.newEl("button");
+  const nav = helpers.qs(".nav");
+  nextBtn.id = "next";
+  nextBtn.className = "secondary";
+  nextBtn.textContent = "Show Next";
+  nav.parentNode.insertBefore(nextBtn, nav.nextSibling);
+};
+
+const removeNextBtn = function() {
+  const nextBtn = helpers.qs("#next");
+  nextBtn.parentNode.removeChild(nextBtn);
+};
+
+const drawNoMoreVenues = function() {
+  const map = helpers.qs("#map");
+  removeNextBtn();
+  map.innerHTML = "";
+  map.insertAdjacentHTML(
+    "afterbegin",
+    `<h4 class="text-c text-white">You ran out of venues, please provide your location for more matches.</h4>`
+  );
+};
+
+export default { drawNotif, removeNotifs, drawSpinner, removeSpinner, drawNextBtn, drawNoMoreVenues };

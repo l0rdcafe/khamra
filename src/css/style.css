@@ -36,7 +36,7 @@ body {
 .fa-spin {
     position: absolute;
     top: 35%;
-    left: 50%;
+    left: 48%;
 }
 
 .nav button {
@@ -66,6 +66,32 @@ body {
     top: 0;
 }
 
+#map h4 {
+    position: absolute;
+    top: 35%;
+    width: 45%;
+    left: 28%;
+}
+
+#next {
+    position: absolute;
+    bottom: 20%;
+    right: 1%;
+    z-index: 9999;
+    box-shadow: 0 0 8px #590f33;
+    border: 1px solid #590f33;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    background: cadetblue;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+    transition: all 0.2s;
+}
+
 .footer {
     height: 17vh;
 }
@@ -76,4 +102,14 @@ body {
 
 g {
     fill: goldenrod;
+}
+
+@keyframes pulse {
+    50% {
+        border-color: #aaa;
+    }
+
+    100%, 0% {
+        border-color: #3b6365;
+    }
 }

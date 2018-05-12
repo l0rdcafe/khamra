@@ -4,14 +4,29 @@ import view from "./view";
 import model from "./model";
 import mapbox from "./mapbox-api";
 
-const getBars = function(pos) {
+const getVenue = function() {
+  if (model.state.venues.length === 0) {
+    view.drawNoMoreVenues();
+  } else {
+    const nextVenue = model.state.venues.shift();
+    mapbox.setMap(nextVenue, model.state);
+  }
+};
+
+const getNext = function() {
+  const nextBtn = helpers.qs("#next");
+
+  helpers.$on(nextBtn, "click", getVenue);
+};
+
+const getVenues = function(pos) {
   const field = helpers.qs("#radius");
   const lat = pos.coords.latitude;
   const lon = pos.coords.longitude;
   let r = 0;
 
-  function fetchBars() {
-    FourSquareAPI.getBars(`${lat},${lon}`, r)
+  function fetchVenues() {
+    FourSquareAPI.getVenues(`${lat},${lon}`, r)
       .then(res => {
         view.removeSpinner();
         const { items } = res.response.groups[0];
@@ -19,7 +34,9 @@ const getBars = function(pos) {
         model.resetState();
         model.setCoords(lat, lon);
         model.appendVenues(items);
-        mapbox.setMap(model.state);
+        getVenue();
+        view.drawNextBtn();
+        getNext();
       })
       .catch(err => {
         view.drawNotif(err.message);
@@ -31,10 +48,10 @@ const getBars = function(pos) {
     view.drawNotif("Please enter a valid radius");
   } else if (field.value === "") {
     r = 10000;
-    fetchBars();
+    fetchVenues();
   } else {
     r = field.value * 1000;
-    fetchBars();
+    fetchVenues();
   }
 };
 
@@ -42,9 +59,10 @@ const getLocation = function() {
   const locBtn = helpers.qs("#drink");
 
   function getCoords() {
+    helpers.qs("#map").innerHTML = "";
     view.drawSpinner();
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getBars, err => {
+      navigator.geolocation.getCurrentPosition(getVenues, err => {
         view.removeSpinner();
         view.drawNotif("Please provide your location");
       });
