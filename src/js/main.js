@@ -9,7 +9,8 @@ const getVenue = function() {
     view.drawNoMoreVenues();
   } else {
     const nextVenue = model.state.venues.shift();
-    mapbox.setMap(nextVenue, model.state);
+    mapbox.removeMarker();
+    mapbox.setMarker(nextVenue);
   }
 };
 
@@ -19,20 +20,17 @@ const getNext = function() {
   helpers.$on(nextBtn, "click", getVenue);
 };
 
-const getVenues = function(pos) {
+const getVenues = function() {
   const field = helpers.qs("#radius");
-  const lat = pos.coords.latitude;
-  const lon = pos.coords.longitude;
+  const lat = model.state.coords[0];
+  const lon = model.state.coords[1];
   let r = 0;
 
-  function fetchVenues() {
-    FourSquareAPI.getVenues(`${lat},${lon}`, r)
+  function fetchVenues(rad) {
+    FourSquareAPI.getVenues(`${lat},${lon}`, rad)
       .then(res => {
-        view.removeSpinner();
         const { items } = res.response.groups[0];
         view.removeNotifs();
-        model.resetState();
-        model.setCoords(lat, lon);
         model.appendVenues(items);
         getVenue();
         view.drawNextBtn();
@@ -48,30 +46,40 @@ const getVenues = function(pos) {
     view.drawNotif("Please enter a valid radius");
   } else if (field.value === "") {
     r = 10000;
-    fetchVenues();
+    fetchVenues(r);
   } else {
     r = field.value * 1000;
-    fetchVenues();
+    fetchVenues(r);
   }
 };
 
-const getLocation = function() {
+const submitRadius = function() {
   const locBtn = helpers.qs("#drink");
-
-  function getCoords() {
-    helpers.qs("#map").innerHTML = "";
-    view.drawSpinner();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getVenues, err => {
-        view.removeSpinner();
-        view.drawNotif("Please provide your location");
-      });
-    } else {
-      view.removeSpinner();
-      view.drawNotif("Geolocation is not supported on this browser");
-    }
-  }
-  helpers.$on(locBtn, "click", getCoords);
+  helpers.$on(locBtn, "click", getVenues);
 };
 
-helpers.$on(document, "DOMContentLoaded", getLocation);
+const setCoords = function(pos) {
+  const lon = pos.coords.longitude;
+  const lat = pos.coords.latitude;
+  model.resetState();
+  model.setCoords(lat, lon);
+  view.removeSpinner();
+  mapbox.drawMap(model.state);
+  submitRadius();
+};
+
+const getCoords = function() {
+  helpers.qs("#map").innerHTML = "";
+  view.drawSpinner();
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(setCoords, err => {
+      view.removeSpinner();
+      view.drawNotif("Please provide your location");
+    });
+  } else {
+    view.removeSpinner();
+    view.drawNotif("Geolocation is not supported on this browser");
+  }
+};
+
+helpers.$on(document, "DOMContentLoaded", getCoords);
