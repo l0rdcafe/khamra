@@ -11,16 +11,8 @@
 <link href="cc-ss.min.css" rel="stylesheet"></head>
 <body>
     <div class="nav">
-            <p class="text-c">Select radius in km</p>
-            <input type="range" min="1" max="30" id="radius" list="tickmarks" value="10">
-             <datalist id="tickmarks">
-                 <option value="1" label="1 km"></option>
-                 <option value="5" label="5 km"></option>
-                 <option value="10" label="10 km"></option>
-                 <option value="15" label="15 km"></option>
-                 <option value="20" label="20 km"></option>
-                 <option value="30" label="30 km"></option>
-             </datalist>
+            <p class="text-c">Select radius in <output id="distance" name="distance" for="radius">10</output> km</p>
+            <input type="range" min="1" max="30" id="radius" list="tickmarks" value="10" oninput="distance.value=radius.value">
             <button class="secondary" id="drink">Submit</button>
     </div>
         <div  id="map">
