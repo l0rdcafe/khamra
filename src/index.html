@@ -11,8 +11,8 @@
 </head>
 <body>
     <div class="nav">
-            <p class="text-c">Select radius in km</p>
-            <input type="text" id="radius">
+            <p class="text-c">Select radius in <output id="distance" name="distance" for="radius">10</output> km</p>
+            <input type="range" min="1" max="30" id="radius" list="tickmarks" value="10" oninput="distance.value=radius.value">
             <button class="secondary" id="drink">Submit</button>
     </div>
         <div  id="map">

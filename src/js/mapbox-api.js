@@ -12,7 +12,7 @@ const drawMap = function(state) {
     container: "map",
     style: "mapbox://styles/mapbox/dark-v9",
     center: [lon, lat],
-    zoom: 12
+    zoom: 13
   });
 
   const div = helpers.newEl("div");
@@ -28,10 +28,26 @@ const setMarker = function(venue) {
 
 const removeMarker = function() {
   if (marker === undefined) {
-    console.log("marker undefined");
     return;
   }
   marker.remove();
 };
 
-export default { setMarker, drawMap, removeMarker };
+const zoomOut = function() {
+  map.zoomTo(12.5);
+};
+
+const moveToMarker = function (venue, state) {
+  const box = [[state.coords[1], state.coords[0]], [venue.venue.location.lng, venue.venue.location.lat]];
+  map.fitBounds(box, {
+    maxZoom: 14.2,
+    padding: {
+      top: 90,
+      bottom: 100,
+      left: 90,
+      right: 120
+    }
+  });
+};
+
+export default { setMarker, drawMap, removeMarker, moveToMarker, zoomOut };

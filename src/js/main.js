@@ -7,10 +7,23 @@ import mapbox from "./mapbox-api";
 const getVenue = function() {
   if (model.state.venues.length === 0) {
     view.drawNoMoreVenues();
+    mapbox.removeMarker();
   } else {
     const nextVenue = model.state.venues.shift();
+    FourSquareAPI.getVenueDetails(nextVenue)
+      .then(res => {
+        const { venue } = res.response;
+        view.drawDetails(venue);
+      })
+      .catch(err => {
+        view.drawNotif(err.message, "error");
+        console.error(err);
+      });
     mapbox.removeMarker();
     mapbox.setMarker(nextVenue);
+    mapbox.zoomOut();
+    mapbox.moveToMarker(nextVenue, model.state);
+    view.drawInfo(nextVenue);
   }
 };
 
@@ -30,6 +43,7 @@ const getVenues = function() {
     FourSquareAPI.getVenues(`${lat},${lon}`, rad)
       .then(res => {
         const { items } = res.response.groups[0];
+        view.removeNextBtn();
         view.removeNotifs();
         model.appendVenues(items);
         getVenue();
@@ -43,7 +57,7 @@ const getVenues = function() {
 
   if (/[A-Z]/i.test(field.value)) {
     view.removeSpinner();
-    view.drawNotif("Please enter a valid radius");
+    view.drawNotif("Please enter a valid radius", "error");
   } else if (field.value === "") {
     r = 10000;
     fetchVenues(r);
@@ -74,11 +88,11 @@ const getCoords = function() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(setCoords, err => {
       view.removeSpinner();
-      view.drawNotif("Please provide your location");
+      view.drawNotif("Please provide your location", "error");
     });
   } else {
     view.removeSpinner();
-    view.drawNotif("Geolocation is not supported on this browser");
+    view.drawNotif("Geolocation is not supported on this browser", "error");
   }
 };
 

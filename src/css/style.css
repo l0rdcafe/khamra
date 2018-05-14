@@ -8,8 +8,8 @@ body {
 .nav {
     position: absolute;
     top: 0;
-    width: 42%;
-    font-size: 1.75rem;
+    width: 99%;
+    font-size: 1rem;
     text-align: center;
     height: 4.75%;
     padding-top: 0;
@@ -29,14 +29,15 @@ body {
 
 .nav p {
     margin: 0.5%;
-    flex: 3;
+    margin-top: 2%;
+    flex: 5;
     color: #fff;
 }
 
 .fa-spin {
     position: absolute;
     top: 37%;
-    left: 47%;
+    left: 48%;
 }
 
 .nav button {
@@ -44,20 +45,80 @@ body {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    flex: 1;
 }
 
 .nav input {
     border-radius: 0;
-    flex: 2;
+    flex: 3;
     box-shadow: 0 0 8px #3b6365;
+}
+
+.nav output {
+    margin-top: 2%;
+    color: goldenrod;
 }
 
 .notif {
     position: absolute;
     top: 8%;
-    left: 35%;
+    left: 25%;
     z-index: 999;
+    font-size: 1.1rem;
+    width: 50%;
+    height: 10vh;
+}
+
+.card {
+    z-index: 999;
+    position: absolute;
+    top: 8%;
+    left: 1%;
+}
+
+.card h4,
+.card h6,
+.card small,
+.card p {
+    background: #fff;
+    padding: 2%;
+    color: #000;
+    border-radius: 2px;
+    z-index: 1000;
+    font-size: 55%;
+}
+
+@media (min-width: 768px) {
+    .nav {
+        width: 42%;
+        font-size: 1.75rem;
+    }
+    
+    .nav p {
+        margin-top: 0.5%;
+    }
+
+    .nav output {
+        margin-top: 0.5%;
+    }
+
+    .card {
+        top: 22%;
+    }
+
+    .card h4,
+    .card h6,
+    .card small,
+    .card p {
+        font-size: 1.75rem;
+        z-index: 999;
+    }
+
+    .notif {
+        font-size: 1.75rem;
+        left: 30%;
+        width: 40%;
+        height: 20vh;
+    }
 }
 
 #map {
