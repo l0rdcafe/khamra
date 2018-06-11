@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Khamra – Nearby Drinks Locator using Geolocation, MapboxGL and Foursquare API</title>
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
     <div class="nav">
+        <h1>Khamra</h1>
             <p class="text-c">Select radius in <output id="distance" name="distance" for="radius">10</output> km</p>
             <input type="range" min="1" max="30" id="radius" list="tickmarks" value="10" oninput="distance.value=radius.value">
             <button class="secondary" id="drink">Submit</button>

@@ -9,7 +9,6 @@ body {
     position: absolute;
     top: 0;
     width: 99%;
-    font-size: 1rem;
     text-align: center;
     height: 4.75%;
     padding-top: 0;
@@ -27,11 +26,22 @@ body {
     height: 100%;
 }
 
+.nav h1 {
+    flex: 2;
+    color: gold;
+    border-right: 1px solid #3b6365;
+    height: 100%;
+    font-size: 1.75rem;
+    padding-top: 1.5%;
+}
+
 .nav p {
-    margin: 0.5%;
-    margin-top: 2%;
-    flex: 5;
+    flex: 3;
     color: #fff;
+    margin: 0.5%;
+    padding-top: 1.5%;
+    height: 100%;
+    font-size: 0.89rem;
 }
 
 .fa-spin {
@@ -49,7 +59,7 @@ body {
 
 .nav input {
     border-radius: 0;
-    flex: 3;
+    flex: 1;
     box-shadow: 0 0 8px #3b6365;
 }
 
@@ -89,12 +99,19 @@ body {
 
 @media (min-width: 768px) {
     .nav {
-        width: 42%;
+        width: 50%;
+        left: 24%;
         font-size: 1.75rem;
     }
     
     .nav p {
-        margin-top: 0.5%;
+        padding-top: 0.25%;
+        font-size: 1.45rem;
+    }
+
+    .nav h1 {
+        font-size: 3rem;
+        padding-top: 0;
     }
 
     .nav output {
@@ -123,7 +140,7 @@ body {
 
 #map {
     width: 100%;
-    height: 83%;
+    height: 88.5%;
     position: absolute;
     top: 0;
 }
@@ -155,11 +172,15 @@ body {
 }
 
 .footer {
-    height: 17vh;
+    height: 11.5vh;
+    font-size: 1.25rem;
+    padding: 0.5% 0;
 }
 
 .footer h4 {
     margin-top: 1%;
+    font-size: 1.5rem;
+    margin-top: 0;
 }
 
 g {
