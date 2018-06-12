@@ -178,9 +178,12 @@ body {
 }
 
 .footer h4 {
-    margin-top: 1%;
     font-size: 1.5rem;
     margin-top: 0;
+}
+
+.footer__social {
+    margin: 0;
 }
 
 g {
